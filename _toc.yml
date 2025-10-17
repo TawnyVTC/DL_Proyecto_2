@@ -1,10 +1,9 @@
 # Table of contents
-# Learn more at https://jupyterbook.org/customize/toc.html
 
 format: jb-book
 root: intro
 chapters:
-- file: EDA-Volatility
-- file: Model-Training-Close
-- file: Model-Training-Volatility
-- file: Analysis
+  - file: notebooks/EDA-Volatility
+  - file: notebooks/Model-Training-Close
+  - file: notebooks/Model-Training-Volatility
+  - file: notebooks/Analysis
