@@ -9,6 +9,7 @@ Los modelos están almacenados en la carpeta `models/` y cada uno se carga diná
 ## **Estructura del proyecto**
 
 
+```bash
 DL_Proyecto_2/
 │
 ├── notebooks/              ← Notebooks del Jupyter Book
@@ -38,7 +39,7 @@ DL_Proyecto_2/
 ├── requirements_app.txt    ← Librerías necesarias para la APi
 ├── Dockerfile              ← Imagen para desplegar la API
 └── README.md               ← Este archivo
-
+```
 
 
 ##  **1. Requisitos**
@@ -82,20 +83,18 @@ Abrir en el navegador:
 
 
 
-##  3. Uso de la API
+##  **3. Uso de la API**
 
-### ✅ Endpoint 1 — `POST /predict`
+### *Endpoint 1 — `POST /predict`*
 
 **Descripción:**
 Devuelve 7 predicciones de volatilidad para un `lag` específico.
-También puedes enviar manualmente las características (`features`) si deseas predecir sobre datos reales.
 
 **Ejemplo de request:**
 
 ```json
 {
-  "lag": 14,
-  "features": [0.12, 0.08, 0.15, 0.10, 0.09, 0.11, 0.14, 0.13, 0.12, 0.10, 0.09, 0.10, 0.11, 0.13]
+  "lag": 14
 }
 ```
 
@@ -107,9 +106,9 @@ También puedes enviar manualmente las características (`features`) si deseas p
 }
 ```
 
----
 
-### ✅ Endpoint 2 — `GET /predict/{lag}`
+
+### *Endpoint 2 — `GET /predict/{lag}`*
 
 **Descripción:**
 Permite obtener las predicciones directamente desde el navegador sin enviar JSON.
@@ -132,10 +131,9 @@ Solo se permiten los siguientes valores de lag:
 
 > **7, 14, 21 y 38**
 
----
 
-### ✅ Endpoint 3 — `GET /health`
 
+###  *Endpoint 3 — `GET /health`*
 **Descripción:**
 Verifica que la API esté en funcionamiento.
 
@@ -145,21 +143,8 @@ Verifica que la API esté en funcionamiento.
 {"status": "ok"}
 ```
 
----
 
-## 🧪 5. Tests unitarios
-
-Para ejecutar los tests:
-
-```bash
-pytest tests/test_api.py -v
-```
-
-Esto validará que los endpoints principales respondan correctamente y que la estructura de salida sea válida.
-
----
-
-## 📦 6. Dependencias principales
+## 5. **Dependencias principales**
 
 `requirements_app.txt` incluye:
 
@@ -172,11 +157,8 @@ pydantic
 pytest
 ```
 
-*(Se puede ajustar según el entorno o reducir tamaño de imagen en Docker con versiones específicas.)*
 
----
-
-## 🧠 Notas finales
+## **Notas**
 
 * Los modelos `.keras` deben estar en las rutas:
 
@@ -186,17 +168,4 @@ pytest
 * Si el lag solicitado no existe, la API devolverá un error `404`.
 * Todas las predicciones se devuelven como una lista de **7 floats**.
 
----
 
-## ✍️ Autor
-
-Proyecto desarrollado por **Tawny Torres**
-API construida con **FastAPI + TensorFlow**
-Optimizada para despliegue con **Docker**
-
-```
-
----
-
-¿Quieres que te genere el archivo listo para descargar (`README.md`) para que no tengas que copiarlo manualmente? Puedo crearlo y pasarte el enlace de descarga directamente.
-```
