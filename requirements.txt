@@ -1,0 +1,11 @@
+jupyter-book
+matplotlib
+numpy
+tensorflow
+pandas
+scikit-learn
+seaborn
+statsmodels
+timeseries-cv
+os
+warnings

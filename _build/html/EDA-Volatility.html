@@ -1,0 +1,1773 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Proyecto Integrador de Deep Learning #2 &#8212; MiniProyecto 2 - Aplicación de Series de Tiempo</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'EDA-Volatility';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Modelado: Precio de Cierre" href="Model-Training-Close.html" />
+    <link rel="prev" title="Predicción del Precio de Cierre/Volatilidad del BitCoin" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">MiniProyecto 2 - Aplicación de Series de Tiempo</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Predicción del Precio de Cierre/Volatilidad del BitCoin
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Proyecto Integrador de Deep Learning #2</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Model-Training-Close.html"><strong>Modelado: Precio de Cierre</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Model-Training-Volatility.html"><strong>Modelado: Volatilidad</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Analysis.html"><em><strong>Análisis de Resultados</strong></em></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FEDA-Volatility.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/EDA-Volatility.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Proyecto Integrador de Deep Learning #2</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-datos"><strong>Análisis Exploratorio de Datos</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocesamiento-y-calculo-de-features"><strong>Preprocesamiento y cálculo de features</strong></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="proyecto-integrador-de-deep-learning-2">
+<h1><strong>Proyecto Integrador de Deep Learning #2</strong><a class="headerlink" href="#proyecto-integrador-de-deep-learning-2" title="Link to this heading">#</a></h1>
+<div class="cell tag_hide-cell docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell content</span>
+<span class="expanded">Hide code cell content</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">btc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;Data\btc_1d_data_2018_to_2025.csv&#39;</span><span class="p">)</span>
+<span class="n">btc</span><span class="p">[</span><span class="s1">&#39;Open time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">btc</span><span class="p">[</span><span class="s1">&#39;Open time&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1">#eliminar columna ignore</span>
+<span class="n">btc</span> <span class="o">=</span> <span class="n">btc</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Ignore&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<section id="analisis-exploratorio-de-datos">
+<h2><strong>Análisis Exploratorio de Datos</strong><a class="headerlink" href="#analisis-exploratorio-de-datos" title="Link to this heading">#</a></h2>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="_images/3445f3c091c0f7fd899926213cab455d7f87835fb5bd363c320120187eccbf74.png" src="_images/3445f3c091c0f7fd899926213cab455d7f87835fb5bd363c320120187eccbf74.png" />
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="_images/786f8922357cfec73c80eed484e5b50b9f41234bb0163010af07e5d28ab0ce1a.png" src="_images/786f8922357cfec73c80eed484e5b50b9f41234bb0163010af07e5d28ab0ce1a.png" />
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="_images/1030af4fa7f9b50535cb4213e6858795466691a5f0fa9395c5d3a838dd0f0e5d.png" src="_images/1030af4fa7f9b50535cb4213e6858795466691a5f0fa9395c5d3a838dd0f0e5d.png" />
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="_images/96337af5d66ef27fcbeae0fdfd25194ed2c0abe4ff828bd67a79061e73756789.png" src="_images/96337af5d66ef27fcbeae0fdfd25194ed2c0abe4ff828bd67a79061e73756789.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Estadísticas descriptivas de precios OHLC</span>
+<span class="n">desc_precios</span> <span class="o">=</span> <span class="n">btc</span><span class="p">[[</span><span class="s2">&quot;Open&quot;</span><span class="p">,</span> <span class="s2">&quot;High&quot;</span><span class="p">,</span> <span class="s2">&quot;Low&quot;</span><span class="p">,</span> <span class="s2">&quot;Close&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Estadísticas descriptivas de retornos</span>
+<span class="n">desc_rets</span> <span class="o">=</span> <span class="n">btc</span><span class="p">[</span><span class="s2">&quot;return&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+
+<span class="c1"># Extra: skewness y kurtosis de retornos</span>
+<span class="n">extra_stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span>
+    <span class="s2">&quot;skewness&quot;</span><span class="p">:</span> <span class="n">btc</span><span class="p">[</span><span class="s2">&quot;return&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">skew</span><span class="p">(),</span>
+    <span class="s2">&quot;kurtosis&quot;</span><span class="p">:</span> <span class="n">btc</span><span class="p">[</span><span class="s2">&quot;return&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">kurt</span><span class="p">()</span>
+<span class="p">},</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Retornos&quot;</span><span class="p">)</span>
+
+<span class="c1"># Unir todo en un DataFrame ordenado</span>
+<span class="n">stats_df</span> <span class="o">=</span> <span class="n">desc_precios</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">stats_df_rets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">desc_rets</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="n">stats_df_rets</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Retornos&quot;</span><span class="p">]</span>
+
+<span class="c1"># Agregar skew y kurtosis</span>
+<span class="n">stats_df_rets</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">stats_df_rets</span><span class="p">,</span> <span class="n">extra_stats</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">])</span>
+
+<span class="c1"># Concatenar precios + retornos</span>
+<span class="n">final_stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">stats_df</span><span class="p">,</span> <span class="n">stats_df_rets</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">final_stats</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+      <th>skewness</th>
+      <th>kurtosis</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Open</th>
+      <td>2594.0</td>
+      <td>29057.847182</td>
+      <td>23539.635421</td>
+      <td>3211.710000</td>
+      <td>9067.985000</td>
+      <td>22712.950000</td>
+      <td>43484.365000</td>
+      <td>106143.820000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>High</th>
+      <td>2594.0</td>
+      <td>29743.249383</td>
+      <td>24046.515394</td>
+      <td>3276.500000</td>
+      <td>9261.240000</td>
+      <td>23252.895000</td>
+      <td>44293.657500</td>
+      <td>108353.000000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Low</th>
+      <td>2594.0</td>
+      <td>28327.995451</td>
+      <td>23021.304519</td>
+      <td>3156.260000</td>
+      <td>8765.000000</td>
+      <td>22257.575000</td>
+      <td>42487.500000</td>
+      <td>105321.490000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Close</th>
+      <td>2594.0</td>
+      <td>29090.193446</td>
+      <td>23576.229505</td>
+      <td>3211.720000</td>
+      <td>9068.840000</td>
+      <td>22741.115000</td>
+      <td>43527.390000</td>
+      <td>106143.820000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Retornos</th>
+      <td>2593.0</td>
+      <td>0.001418</td>
+      <td>0.035720</td>
+      <td>-0.395048</td>
+      <td>-0.014071</td>
+      <td>0.000708</td>
+      <td>0.016437</td>
+      <td>0.195361</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>Retornos</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>-0.392546</td>
+      <td>8.717892</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="_images/735d8bcf18c6340558e2987668f437e4d91cc2ff5436781ddeca34d4907dcca1.png" src="_images/735d8bcf18c6340558e2987668f437e4d91cc2ff5436781ddeca34d4907dcca1.png" />
+</div>
+</div>
+</section>
+<section id="preprocesamiento-y-calculo-de-features">
+<h2><strong>Preprocesamiento y cálculo de features</strong><a class="headerlink" href="#preprocesamiento-y-calculo-de-features" title="Link to this heading">#</a></h2>
+<p>Cálculo de retornos logarítmicos (ingresar formula)</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Retornos logarítmicos</span>
+<span class="n">btc</span><span class="p">[</span><span class="s2">&quot;LogReturn&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">btc</span><span class="p">[</span><span class="s2">&quot;Close&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">btc</span><span class="p">[</span><span class="s2">&quot;Close&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Vista rápida</span>
+<span class="n">btc</span> <span class="o">=</span> <span class="n">btc</span><span class="p">[[</span><span class="s2">&quot;Open time&quot;</span><span class="p">,</span> <span class="s2">&quot;Close&quot;</span><span class="p">,</span> <span class="s2">&quot;LogReturn&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>Cálculo de volatilidad histórica (rolling std) (ingresar formúla)</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Volatilidad móvil de 30 días</span>
+<span class="n">btc</span><span class="p">[</span><span class="s2">&quot;Volatility&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">btc</span><span class="p">[</span><span class="s2">&quot;LogReturn&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="n">window</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span><span class="o">.</span><span class="n">std</span><span class="p">()</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">365</span><span class="p">)</span>
+
+<span class="n">btc</span> <span class="o">=</span> <span class="n">btc</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">y_full</span> <span class="o">=</span> <span class="n">btc</span><span class="p">[</span><span class="s1">&#39;Close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">volatility_full</span> <span class="o">=</span> <span class="n">btc</span><span class="p">[</span><span class="s1">&#39;Volatility&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># Vista rápida</span>
+<span class="n">btc</span><span class="p">[[</span><span class="s2">&quot;Open time&quot;</span><span class="p">,</span> <span class="s1">&#39;Close&#39;</span><span class="p">,</span><span class="s2">&quot;LogReturn&quot;</span><span class="p">,</span> <span class="s1">&#39;Volatility&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Open time</th>
+      <th>Close</th>
+      <th>LogReturn</th>
+      <th>Volatility</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2018-01-31</td>
+      <td>10285.10</td>
+      <td>0.004638</td>
+      <td>1.355575</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2018-02-01</td>
+      <td>9224.52</td>
+      <td>-0.108831</td>
+      <td>1.348263</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2018-02-02</td>
+      <td>8873.03</td>
+      <td>-0.038849</td>
+      <td>1.345556</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2018-02-03</td>
+      <td>9199.96</td>
+      <td>0.036183</td>
+      <td>1.355471</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2018-02-04</td>
+      <td>8184.81</td>
+      <td>-0.116919</td>
+      <td>1.307933</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="_images/a1506720d40807f0f9c118c716012da8285944d5ddf09b43042f8b8c5d5da480.png" src="_images/a1506720d40807f0f9c118c716012da8285944d5ddf09b43042f8b8c5d5da480.png" />
+</div>
+</div>
+<p>Generación del lags del precio</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear lags de precio de cierre</span>
+<span class="k">for</span> <span class="n">lag</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">28</span><span class="p">]:</span>
+    <span class="n">btc</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;Close_lag_</span><span class="si">{</span><span class="n">lag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">btc</span><span class="p">[</span><span class="s2">&quot;Close&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="n">lag</span><span class="p">)</span>
+
+<span class="n">btc</span><span class="p">[[</span> <span class="s2">&quot;Open time&quot;</span><span class="p">,</span> <span class="s2">&quot;Close&quot;</span><span class="p">,</span> <span class="s2">&quot;Close_lag_7&quot;</span><span class="p">,</span> <span class="s2">&quot;Close_lag_14&quot;</span><span class="p">,</span> <span class="s2">&quot;Close_lag_21&quot;</span><span class="p">,</span> <span class="s2">&quot;Close_lag_28&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">35</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Open time</th>
+      <th>Close</th>
+      <th>Close_lag_7</th>
+      <th>Close_lag_14</th>
+      <th>Close_lag_21</th>
+      <th>Close_lag_28</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2018-01-31</td>
+      <td>10285.10</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2018-02-01</td>
+      <td>9224.52</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2018-02-02</td>
+      <td>8873.03</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2018-02-03</td>
+      <td>9199.96</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2018-02-04</td>
+      <td>8184.81</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2018-02-05</td>
+      <td>6939.99</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2018-02-06</td>
+      <td>7652.14</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2018-02-07</td>
+      <td>7599.00</td>
+      <td>10285.10</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2018-02-08</td>
+      <td>7784.02</td>
+      <td>9224.52</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2018-02-09</td>
+      <td>8683.92</td>
+      <td>8873.03</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2018-02-10</td>
+      <td>8533.98</td>
+      <td>9199.96</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2018-02-11</td>
+      <td>8063.88</td>
+      <td>8184.81</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2018-02-12</td>
+      <td>8903.00</td>
+      <td>6939.99</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2018-02-13</td>
+      <td>8539.90</td>
+      <td>7652.14</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2018-02-14</td>
+      <td>9449.99</td>
+      <td>7599.00</td>
+      <td>10285.10</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>2018-02-15</td>
+      <td>10000.09</td>
+      <td>7784.02</td>
+      <td>9224.52</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>2018-02-16</td>
+      <td>10159.98</td>
+      <td>8683.92</td>
+      <td>8873.03</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>2018-02-17</td>
+      <td>11039.55</td>
+      <td>8533.98</td>
+      <td>9199.96</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>2018-02-18</td>
+      <td>10383.43</td>
+      <td>8063.88</td>
+      <td>8184.81</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>2018-02-19</td>
+      <td>11153.00</td>
+      <td>8903.00</td>
+      <td>6939.99</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>2018-02-20</td>
+      <td>11200.99</td>
+      <td>8539.90</td>
+      <td>7652.14</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>2018-02-21</td>
+      <td>10437.60</td>
+      <td>9449.99</td>
+      <td>7599.00</td>
+      <td>10285.10</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>2018-02-22</td>
+      <td>9811.04</td>
+      <td>10000.09</td>
+      <td>7784.02</td>
+      <td>9224.52</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>2018-02-23</td>
+      <td>10131.04</td>
+      <td>10159.98</td>
+      <td>8683.92</td>
+      <td>8873.03</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2018-02-24</td>
+      <td>9694.51</td>
+      <td>11039.55</td>
+      <td>8533.98</td>
+      <td>9199.96</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>2018-02-25</td>
+      <td>9590.00</td>
+      <td>10383.43</td>
+      <td>8063.88</td>
+      <td>8184.81</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>2018-02-26</td>
+      <td>10324.00</td>
+      <td>11153.00</td>
+      <td>8903.00</td>
+      <td>6939.99</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>2018-02-27</td>
+      <td>10569.04</td>
+      <td>11200.99</td>
+      <td>8539.90</td>
+      <td>7652.14</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>2018-02-28</td>
+      <td>10326.76</td>
+      <td>10437.60</td>
+      <td>9449.99</td>
+      <td>7599.00</td>
+      <td>10285.10</td>
+    </tr>
+    <tr>
+      <th>29</th>
+      <td>2018-03-01</td>
+      <td>10920.00</td>
+      <td>9811.04</td>
+      <td>10000.09</td>
+      <td>7784.02</td>
+      <td>9224.52</td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>2018-03-02</td>
+      <td>11039.00</td>
+      <td>10131.04</td>
+      <td>10159.98</td>
+      <td>8683.92</td>
+      <td>8873.03</td>
+    </tr>
+    <tr>
+      <th>31</th>
+      <td>2018-03-03</td>
+      <td>11464.48</td>
+      <td>9694.51</td>
+      <td>11039.55</td>
+      <td>8533.98</td>
+      <td>9199.96</td>
+    </tr>
+    <tr>
+      <th>32</th>
+      <td>2018-03-04</td>
+      <td>11515.00</td>
+      <td>9590.00</td>
+      <td>10383.43</td>
+      <td>8063.88</td>
+      <td>8184.81</td>
+    </tr>
+    <tr>
+      <th>33</th>
+      <td>2018-03-05</td>
+      <td>11454.00</td>
+      <td>10324.00</td>
+      <td>11153.00</td>
+      <td>8903.00</td>
+      <td>6939.99</td>
+    </tr>
+    <tr>
+      <th>34</th>
+      <td>2018-03-06</td>
+      <td>10716.48</td>
+      <td>10569.04</td>
+      <td>11200.99</td>
+      <td>8539.90</td>
+      <td>7652.14</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Generación de targets multi-step (7 días)</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Crear targets multi-step (7 días hacia adelante)</span>
+<span class="n">horizon</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">horizon</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">btc</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;target_t+</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">btc</span><span class="p">[</span><span class="s2">&quot;Close&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shift</span><span class="p">(</span><span class="o">-</span><span class="n">h</span><span class="p">)</span>
+
+<span class="n">btc</span><span class="p">[[</span> <span class="s2">&quot;Open time&quot;</span><span class="p">,</span> <span class="s2">&quot;Close&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;target_t+</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">horizon</span><span class="o">+</span><span class="mi">1</span><span class="p">)]]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Open time</th>
+      <th>Close</th>
+      <th>target_t+1</th>
+      <th>target_t+2</th>
+      <th>target_t+3</th>
+      <th>target_t+4</th>
+      <th>target_t+5</th>
+      <th>target_t+6</th>
+      <th>target_t+7</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2018-01-31</td>
+      <td>10285.10</td>
+      <td>9224.52</td>
+      <td>8873.03</td>
+      <td>9199.96</td>
+      <td>8184.81</td>
+      <td>6939.99</td>
+      <td>7652.14</td>
+      <td>7599.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2018-02-01</td>
+      <td>9224.52</td>
+      <td>8873.03</td>
+      <td>9199.96</td>
+      <td>8184.81</td>
+      <td>6939.99</td>
+      <td>7652.14</td>
+      <td>7599.00</td>
+      <td>7784.02</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2018-02-02</td>
+      <td>8873.03</td>
+      <td>9199.96</td>
+      <td>8184.81</td>
+      <td>6939.99</td>
+      <td>7652.14</td>
+      <td>7599.00</td>
+      <td>7784.02</td>
+      <td>8683.92</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2018-02-03</td>
+      <td>9199.96</td>
+      <td>8184.81</td>
+      <td>6939.99</td>
+      <td>7652.14</td>
+      <td>7599.00</td>
+      <td>7784.02</td>
+      <td>8683.92</td>
+      <td>8533.98</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2018-02-04</td>
+      <td>8184.81</td>
+      <td>6939.99</td>
+      <td>7652.14</td>
+      <td>7599.00</td>
+      <td>7784.02</td>
+      <td>8683.92</td>
+      <td>8533.98</td>
+      <td>8063.88</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2018-02-05</td>
+      <td>6939.99</td>
+      <td>7652.14</td>
+      <td>7599.00</td>
+      <td>7784.02</td>
+      <td>8683.92</td>
+      <td>8533.98</td>
+      <td>8063.88</td>
+      <td>8903.00</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2018-02-06</td>
+      <td>7652.14</td>
+      <td>7599.00</td>
+      <td>7784.02</td>
+      <td>8683.92</td>
+      <td>8533.98</td>
+      <td>8063.88</td>
+      <td>8903.00</td>
+      <td>8539.90</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2018-02-07</td>
+      <td>7599.00</td>
+      <td>7784.02</td>
+      <td>8683.92</td>
+      <td>8533.98</td>
+      <td>8063.88</td>
+      <td>8903.00</td>
+      <td>8539.90</td>
+      <td>9449.99</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2018-02-08</td>
+      <td>7784.02</td>
+      <td>8683.92</td>
+      <td>8533.98</td>
+      <td>8063.88</td>
+      <td>8903.00</td>
+      <td>8539.90</td>
+      <td>9449.99</td>
+      <td>10000.09</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2018-02-09</td>
+      <td>8683.92</td>
+      <td>8533.98</td>
+      <td>8063.88</td>
+      <td>8903.00</td>
+      <td>8539.90</td>
+      <td>9449.99</td>
+      <td>10000.09</td>
+      <td>10159.98</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2018-02-10</td>
+      <td>8533.98</td>
+      <td>8063.88</td>
+      <td>8903.00</td>
+      <td>8539.90</td>
+      <td>9449.99</td>
+      <td>10000.09</td>
+      <td>10159.98</td>
+      <td>11039.55</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2018-02-11</td>
+      <td>8063.88</td>
+      <td>8903.00</td>
+      <td>8539.90</td>
+      <td>9449.99</td>
+      <td>10000.09</td>
+      <td>10159.98</td>
+      <td>11039.55</td>
+      <td>10383.43</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2018-02-12</td>
+      <td>8903.00</td>
+      <td>8539.90</td>
+      <td>9449.99</td>
+      <td>10000.09</td>
+      <td>10159.98</td>
+      <td>11039.55</td>
+      <td>10383.43</td>
+      <td>11153.00</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2018-02-13</td>
+      <td>8539.90</td>
+      <td>9449.99</td>
+      <td>10000.09</td>
+      <td>10159.98</td>
+      <td>11039.55</td>
+      <td>10383.43</td>
+      <td>11153.00</td>
+      <td>11200.99</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2018-02-14</td>
+      <td>9449.99</td>
+      <td>10000.09</td>
+      <td>10159.98</td>
+      <td>11039.55</td>
+      <td>10383.43</td>
+      <td>11153.00</td>
+      <td>11200.99</td>
+      <td>10437.60</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">btc</span> <span class="o">=</span> <span class="n">btc</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">btc</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Open time</th>
+      <th>Close</th>
+      <th>LogReturn</th>
+      <th>Volatility</th>
+      <th>Close_lag_7</th>
+      <th>Close_lag_14</th>
+      <th>Close_lag_21</th>
+      <th>Close_lag_28</th>
+      <th>target_t+1</th>
+      <th>target_t+2</th>
+      <th>target_t+3</th>
+      <th>target_t+4</th>
+      <th>target_t+5</th>
+      <th>target_t+6</th>
+      <th>target_t+7</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2018-02-28</td>
+      <td>10326.76</td>
+      <td>-0.023190</td>
+      <td>1.370991</td>
+      <td>10437.60</td>
+      <td>9449.99</td>
+      <td>7599.00</td>
+      <td>10285.10</td>
+      <td>10920.00</td>
+      <td>11039.00</td>
+      <td>11464.48</td>
+      <td>11515.00</td>
+      <td>11454.00</td>
+      <td>10716.48</td>
+      <td>9910.00</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2018-03-01</td>
+      <td>10920.00</td>
+      <td>0.055857</td>
+      <td>1.344643</td>
+      <td>9811.04</td>
+      <td>10000.09</td>
+      <td>7784.02</td>
+      <td>9224.52</td>
+      <td>11039.00</td>
+      <td>11464.48</td>
+      <td>11515.00</td>
+      <td>11454.00</td>
+      <td>10716.48</td>
+      <td>9910.00</td>
+      <td>9271.64</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2018-03-02</td>
+      <td>11039.00</td>
+      <td>0.010838</td>
+      <td>1.344961</td>
+      <td>10131.04</td>
+      <td>10159.98</td>
+      <td>8683.92</td>
+      <td>8873.03</td>
+      <td>11464.48</td>
+      <td>11515.00</td>
+      <td>11454.00</td>
+      <td>10716.48</td>
+      <td>9910.00</td>
+      <td>9271.64</td>
+      <td>9227.00</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2018-03-03</td>
+      <td>11464.48</td>
+      <td>0.037819</td>
+      <td>1.288457</td>
+      <td>9694.51</td>
+      <td>11039.55</td>
+      <td>8533.98</td>
+      <td>9199.96</td>
+      <td>11515.00</td>
+      <td>11454.00</td>
+      <td>10716.48</td>
+      <td>9910.00</td>
+      <td>9271.64</td>
+      <td>9227.00</td>
+      <td>8770.22</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2018-03-04</td>
+      <td>11515.00</td>
+      <td>0.004397</td>
+      <td>1.277770</td>
+      <td>9590.00</td>
+      <td>10383.43</td>
+      <td>8063.88</td>
+      <td>8184.81</td>
+      <td>11454.00</td>
+      <td>10716.48</td>
+      <td>9910.00</td>
+      <td>9271.64</td>
+      <td>9227.00</td>
+      <td>8770.22</td>
+      <td>9533.57</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2018-03-05</td>
+      <td>11454.00</td>
+      <td>-0.005312</td>
+      <td>1.274726</td>
+      <td>10324.00</td>
+      <td>11153.00</td>
+      <td>8903.00</td>
+      <td>6939.99</td>
+      <td>10716.48</td>
+      <td>9910.00</td>
+      <td>9271.64</td>
+      <td>9227.00</td>
+      <td>8770.22</td>
+      <td>9533.57</td>
+      <td>9131.34</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>2018-03-06</td>
+      <td>10716.48</td>
+      <td>-0.066556</td>
+      <td>1.224051</td>
+      <td>10569.04</td>
+      <td>11200.99</td>
+      <td>8539.90</td>
+      <td>7652.14</td>
+      <td>9910.00</td>
+      <td>9271.64</td>
+      <td>9227.00</td>
+      <td>8770.22</td>
+      <td>9533.57</td>
+      <td>9131.34</td>
+      <td>9150.00</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>2018-03-07</td>
+      <td>9910.00</td>
+      <td>-0.078238</td>
+      <td>1.099999</td>
+      <td>10326.76</td>
+      <td>10437.60</td>
+      <td>9449.99</td>
+      <td>7599.00</td>
+      <td>9271.64</td>
+      <td>9227.00</td>
+      <td>8770.22</td>
+      <td>9533.57</td>
+      <td>9131.34</td>
+      <td>9150.00</td>
+      <td>8170.00</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>2018-03-08</td>
+      <td>9271.64</td>
+      <td>-0.066584</td>
+      <td>1.087877</td>
+      <td>10920.00</td>
+      <td>9811.04</td>
+      <td>10000.09</td>
+      <td>7784.02</td>
+      <td>9227.00</td>
+      <td>8770.22</td>
+      <td>9533.57</td>
+      <td>9131.34</td>
+      <td>9150.00</td>
+      <td>8170.00</td>
+      <td>8240.98</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>2018-03-09</td>
+      <td>9227.00</td>
+      <td>-0.004826</td>
+      <td>1.087572</td>
+      <td>11039.00</td>
+      <td>10131.04</td>
+      <td>10159.98</td>
+      <td>8683.92</td>
+      <td>8770.22</td>
+      <td>9533.57</td>
+      <td>9131.34</td>
+      <td>9150.00</td>
+      <td>8170.00</td>
+      <td>8240.98</td>
+      <td>8260.00</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2018-03-10</td>
+      <td>8770.22</td>
+      <td>-0.050772</td>
+      <td>1.103545</td>
+      <td>11464.48</td>
+      <td>9694.51</td>
+      <td>11039.55</td>
+      <td>8533.98</td>
+      <td>9533.57</td>
+      <td>9131.34</td>
+      <td>9150.00</td>
+      <td>8170.00</td>
+      <td>8240.98</td>
+      <td>8260.00</td>
+      <td>7824.80</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2018-03-11</td>
+      <td>9533.57</td>
+      <td>0.083457</td>
+      <td>1.075711</td>
+      <td>11515.00</td>
+      <td>9590.00</td>
+      <td>10383.43</td>
+      <td>8063.88</td>
+      <td>9131.34</td>
+      <td>9150.00</td>
+      <td>8170.00</td>
+      <td>8240.98</td>
+      <td>8260.00</td>
+      <td>7824.80</td>
+      <td>8189.99</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2018-03-12</td>
+      <td>9131.34</td>
+      <td>-0.043107</td>
+      <td>1.085569</td>
+      <td>11454.00</td>
+      <td>10324.00</td>
+      <td>11153.00</td>
+      <td>8903.00</td>
+      <td>9150.00</td>
+      <td>8170.00</td>
+      <td>8240.98</td>
+      <td>8260.00</td>
+      <td>7824.80</td>
+      <td>8189.99</td>
+      <td>8600.00</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2018-03-13</td>
+      <td>9150.00</td>
+      <td>0.002041</td>
+      <td>1.064578</td>
+      <td>10716.48</td>
+      <td>10569.04</td>
+      <td>11200.99</td>
+      <td>8539.90</td>
+      <td>8170.00</td>
+      <td>8240.98</td>
+      <td>8260.00</td>
+      <td>7824.80</td>
+      <td>8189.99</td>
+      <td>8600.00</td>
+      <td>8909.98</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>2018-03-14</td>
+      <td>8170.00</td>
+      <td>-0.113285</td>
+      <td>1.084025</td>
+      <td>9910.00</td>
+      <td>10326.76</td>
+      <td>10437.60</td>
+      <td>9449.99</td>
+      <td>8240.98</td>
+      <td>8260.00</td>
+      <td>7824.80</td>
+      <td>8189.99</td>
+      <td>8600.00</td>
+      <td>8909.98</td>
+      <td>8885.00</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ejemplo: fila intermedia (para que existan lags y targets)</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">100</span>  
+
+<span class="n">ventana_lags</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">28</span><span class="p">]</span>
+<span class="n">horizon</span> <span class="o">=</span> <span class="mi">7</span>
+
+<span class="c1"># Extraemos un rango de precios alrededor</span>
+<span class="n">context</span> <span class="o">=</span> <span class="n">btc</span><span class="p">[</span><span class="s2">&quot;Close&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">30</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">15</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s2">&quot;o&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Precio de cierre&quot;</span><span class="p">)</span>
+
+<span class="c1"># Punto actual</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">30</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Día actual (t)&quot;</span><span class="p">)</span>
+
+<span class="c1"># Marcar lags</span>
+<span class="k">for</span> <span class="n">lag</span> <span class="ow">in</span> <span class="n">ventana_lags</span><span class="p">:</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="mi">30</span> <span class="o">-</span> <span class="n">lag</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">*</span><span class="mf">1.02</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;lag </span><span class="si">{</span><span class="n">lag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+
+<span class="c1"># Marcar targets futuros</span>
+<span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">horizon</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="mi">30</span> <span class="o">+</span> <span class="n">h</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">h</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">]:</span>  <span class="c1"># mostrar algunos para no saturar</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">idx</span><span class="p">,</span> <span class="n">context</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span><span class="o">*</span><span class="mf">0.98</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;t+</span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">9</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Esquema de lags y targets en la serie de precios&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Índice relativo de tiempo&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Precio (USD)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="_images/6c614f412dfe15a15d81668a91fb496c9dca342ed6584ef7cf29629bce48cb50.png" src="_images/6c614f412dfe15a15d81668a91fb496c9dca342ed6584ef7cf29629bce48cb50.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Predicción del Precio de Cierre/Volatilidad del BitCoin</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Model-Training-Close.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>Modelado: Precio de Cierre</strong></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-exploratorio-de-datos"><strong>Análisis Exploratorio de Datos</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocesamiento-y-calculo-de-features"><strong>Preprocesamiento y cálculo de features</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Tawny Torres
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
