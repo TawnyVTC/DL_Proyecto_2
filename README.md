@@ -23,7 +23,6 @@ DL_Proyecto_2/
 │   ├── volatilidad
 │
 ├── app/
-│   ├── **init**.py
 │   └── api.py              ← Código principal de la API
 │
 ├── models/                 ← Modelos MLP Entrenados
